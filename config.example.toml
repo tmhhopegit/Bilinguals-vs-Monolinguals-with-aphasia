@@ -1,0 +1,49 @@
+# Copy to config.toml and edit. Relative paths are relative to this file.
+
+# One row per scan. Columns named below, plus lesion-load columns (prefix
+# below) and one column per task score.
+patients = "data/patients.xlsx"
+sheet = 0
+id_column = "ID"
+l1_column = "First language English"          # values listed in l1_values count as L1
+l1_values = [1, "yes", "English", "true"]
+time_post_column = "Time post stroke (months)"
+volume_column = "Lesion volume"
+right_volume_column = "Right hemisphere lesion volume"
+lesion_load_prefix = "LL_"
+# The original also used column 8 of ConvertDemographicsToPredictors as a
+# predictor; name it here if you want to keep it.
+extra_predictors = []
+
+# Language tasks (the original's Lang index list) and the cognitive scores that
+# patients had to have (the original's Cog list; used only to select patients).
+tasks = ["Naming", "Repetition"]
+require_complete = []
+
+min_time_post = 3            # months
+left_hemisphere_only = true
+first_scan_only = true
+score_range = [28, 75]       # clip predictions in plots (GetAllpreds did this)
+
+language_history = "data/language_history.xlsx"   # first column = patient ID
+
+# For VLSM: either an .npz with 'ids' and 'lesions' (patients x voxels, 0/1) ...
+lesions_npz = "data/lesions.npz"
+# ... or a column of lesion image paths plus a brain mask (needs nibabel)
+# lesion_image_column = "Binary file"
+# brain_mask = "masks/brainmask.nii"
+
+results_dir = "results"
+seed = 0
+
+[selection]
+max_features = 40
+objective = "r"              # "r" as the original (Mode 1), or "mae"
+folds = 10
+repeats = 10
+
+[vlsm]
+min_patients = 10            # lesioned and spared in EACH group
+permutations = 1000
+alpha = 0.10                 # FWE level; the original used the 10th percentile
+statistic = "kw"             # Kruskal-Wallis ("kw") or t-test ("t")

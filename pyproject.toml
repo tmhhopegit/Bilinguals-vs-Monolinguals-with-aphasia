@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bilinguals"
+version = "2.0.0"
+description = "Do lesion-outcome models trained on L1 stroke patients transfer to L2 patients? (Python port of the MATLAB Bilinguals analysis)"
+requires-python = ">=3.11"
+dependencies = ["numpy", "scipy", "pandas", "openpyxl", "matplotlib"]
+
+[project.optional-dependencies]
+images = ["nibabel"]
+
+[project.scripts]
+bilinguals = "bilinguals.__main__:main"
+
+[tool.setuptools]
+packages = ["bilinguals"]
